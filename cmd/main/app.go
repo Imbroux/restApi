@@ -39,6 +39,10 @@ func main() {
 		}
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
 	})
+	e.PUT("/users/:id", func(c echo.Context) error {
+
+		return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
+	})
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
