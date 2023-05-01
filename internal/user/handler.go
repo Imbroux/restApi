@@ -3,6 +3,7 @@ package user
 import (
 	"github.com/labstack/echo"
 	"net/http"
+	error2 "restApi/internal/error"
 	"strconv"
 )
 
@@ -38,12 +39,13 @@ func getUser(c echo.Context) error {
 			return c.JSON(http.StatusOK, user)
 		}
 	}
-	return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
+	return error2.NewErrorResponse(c, http.StatusNotFound, "user not foun")
 }
 
 func createUser(c echo.Context) error {
 	user := new(User)
 	if err := c.Bind(user); err != nil {
+		return error2.NewErrorResponse(c, http.StatusBadRequest, "invalid request body")
 		return err
 	}
 	users = append(users, *user)
@@ -63,7 +65,7 @@ func updateUser(c echo.Context) error {
 			return c.JSON(http.StatusOK, users[i])
 		}
 	}
-	return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
+	return error2.NewErrorResponse(c, http.StatusNotFound, "users not found or not update")
 }
 
 func deleteUser(c echo.Context) error {
@@ -75,5 +77,6 @@ func deleteUser(c echo.Context) error {
 			return c.NoContent(http.StatusNoContent)
 		}
 	}
-	return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
+	return error2.NewErrorResponse(c, http.StatusNotFound, "users not found or not Deleted")
+
 }
