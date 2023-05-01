@@ -2,6 +2,6 @@ package handlers
 
 import "github.com/labstack/echo"
 
-type Handler interface {
-	Register(router *echo.Router)
+type HandlerInterface interface {
+	Register() *echo.Echo
 }
